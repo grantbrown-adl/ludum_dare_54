@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maximumSpeed;
     [SerializeField] private float _forwardDragAmount;
     [SerializeField] private float _forwardDragTime;
+    [SerializeField] private float _rightVelocityRenderLimit;
 
     [Header("View Variables")]
     [SerializeField] private float _accelerationInput;
@@ -87,6 +88,19 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D.velocity = _forwardVelocity + _rightVelocity * _slideFactor;
     }
 
+    float GetRightVelocity()
+    {
+        return Vector2.Dot(transform.right, _rigidbody2D.velocity);
+    }
+
+    public bool RenderTrail(out float rightVelocity, out bool braking)
+    {
+        rightVelocity = GetRightVelocity();
+        braking = _accelerationInput < 0 && _relativeForwardVelocity > 0;
+
+        return braking || Mathf.Abs(rightVelocity) > _rightVelocityRenderLimit;
+    }
+
     void InitialiseVariables()
     {
         if(_accelerationSpeed <= 0) _accelerationSpeed = 10.0f;
@@ -96,5 +110,6 @@ public class PlayerController : MonoBehaviour
         if (_reverseSpeedFactor < 0) _reverseSpeedFactor = 0.0f;
         if (_forwardDragTime <= 0) _forwardDragTime = 3.0f;
         if (_forwardDragAmount <= 0) _forwardDragAmount = 3.0f;
+        if (_rightVelocityRenderLimit < 0) _rightVelocityRenderLimit = 0.0f;
     }
 }
