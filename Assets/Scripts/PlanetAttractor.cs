@@ -5,29 +5,29 @@ using UnityEngine;
 
 public class PlanetAttractor : MonoBehaviour
 {
-    [SerializeField] private float _gravitationalForce = 10f;
-    [SerializeField] private float _radius = 5.0f;
-    //[SerializeField] private List<Rigidbody2D> _rigidbodies = new();    
+    [SerializeField] private float _gravitationalForce;
+    [SerializeField] private float _radius;   
     [SerializeField] private HashSet<Rigidbody2D> _rigidbodies = new();
     [SerializeField] private int _numRigidbodies;
 
-
+    private void Awake()
+    {
+        if (_gravitationalForce <= 0) _gravitationalForce = 3.0f;
+        if (_radius <= 0) _radius = 5.0f;
+    }
     void FixedUpdate()
     {
         _numRigidbodies = _rigidbodies.Count;
-        Debug.Log("Fixed Update");
+        _rigidbodies.Clear();
         foreach (Collider2D objectCollision in Physics2D.OverlapCircleAll(transform.position, _radius))
         {
-            Debug.Log("Overlap Circle");
             Rigidbody2D colliderRigidbody = objectCollision.GetComponent<Rigidbody2D>();
-            Debug.Log($"Collider RB: {colliderRigidbody}");
             if (colliderRigidbody != null && !_rigidbodies.Contains(colliderRigidbody)) _rigidbodies.Add(objectCollision.GetComponent<Rigidbody2D>());
             if (_rigidbodies == null) return;
         }
 
         foreach (Rigidbody2D rb2d in _rigidbodies)
         {
-            Debug.Log($"Applying gravitational force");
             ApplyGravitationalForce(rb2d);
         }
     }
@@ -49,13 +49,15 @@ public class PlanetAttractor : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
 
+
+    // Probably useless calls here
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("collision entered");
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            // Add the Rigidbody2D component to the HashSet.
             _rigidbodies.Add(rb);
         }
     }
@@ -66,8 +68,8 @@ public class PlanetAttractor : MonoBehaviour
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            // Remove the Rigidbody2D component from the HashSet.
             _rigidbodies.Remove(rb);
         }
     }
+    */
 }
