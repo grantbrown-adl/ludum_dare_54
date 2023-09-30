@@ -22,7 +22,12 @@ public class PlanetAttractor : MonoBehaviour
         foreach (Collider2D objectCollision in Physics2D.OverlapCircleAll(transform.position, _radius))
         {
             Rigidbody2D colliderRigidbody = objectCollision.GetComponent<Rigidbody2D>();
-            if (colliderRigidbody != null && !_rigidbodies.Contains(colliderRigidbody)) _rigidbodies.Add(objectCollision.GetComponent<Rigidbody2D>());
+            if (colliderRigidbody != null 
+                && !_rigidbodies.Contains(colliderRigidbody) 
+                && objectCollision.gameObject.layer != LayerMask.NameToLayer("Player"))
+            {
+                _rigidbodies.Add(objectCollision.GetComponent<Rigidbody2D>());
+            }
             if (_rigidbodies == null) return;
         }
 
@@ -48,28 +53,4 @@ public class PlanetAttractor : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
-
-
-    // Probably useless calls here
-    /*
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("collision entered");
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            _rigidbodies.Add(rb);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log("collision exited");
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            _rigidbodies.Remove(rb);
-        }
-    }
-    */
 }
