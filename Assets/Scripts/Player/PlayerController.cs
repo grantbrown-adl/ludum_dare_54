@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     [Header("Object Pools")]
     [SerializeField] private ObjectPoolScript _projectilePool;
     public ObjectPoolScript ProjectilePool { get => _projectilePool; set => _projectilePool = value; }
-    
+    public int Health { get => _health; set => _health = value; }
+    public bool IsDead { get => _isDead; set => _isDead = value; }
 
     [Header("Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] Transform _projectilePosition;
+    [SerializeField] GameObject _explosionEffect;
 
     [Header("Settings")]
     [SerializeField] private float _accelerationSpeed;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _forwardDragAmount;
     [SerializeField] private float _forwardDragTime;
     [SerializeField] private float _rightVelocityRenderLimit;
+    [SerializeField] private int _health;
 
     [Header("View Variables")]
     [SerializeField] private float _accelerationInput;
@@ -33,12 +36,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _rightVelocity;
     [SerializeField] private float _relativeForwardVelocity;
     [SerializeField] private float _reverseSpeedFactor;
+    [SerializeField] private bool _isDead;
 
     private float epsilon = 0.01f;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        IsDead = false;
+        if (Health <= 0) Health = 1;
         InitialiseVariables();
     }
 
@@ -51,6 +57,8 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyForce()
     {
+        if (IsDead) _forwardDragAmount = 0.1f;
+
         _relativeForwardVelocity = Vector2.Dot(transform.up, _rigidbody2D.velocity);
 
         if ((_relativeForwardVelocity >= _maximumSpeed && _accelerationInput > epsilon) || (_relativeForwardVelocity <= (-_maximumSpeed * _reverseSpeedFactor) && _accelerationInput < -epsilon) || (_rigidbody2D.velocity.sqrMagnitude > _maximumSpeed && _accelerationInput > 0))
@@ -88,6 +96,8 @@ public class PlayerController : MonoBehaviour
 
     void ReduceRightVelocity()
     {
+        //if(IsDead) _slideFactor = 0.99f;
+
         _forwardVelocity = transform.up * Vector2.Dot(_rigidbody2D.velocity, transform.up);
         _rightVelocity = transform.right * Vector2.Dot(_rigidbody2D.velocity, transform.right);
 
@@ -126,4 +136,37 @@ public class PlayerController : MonoBehaviour
         if (_forwardDragAmount <= 0) _forwardDragAmount = 3.0f;
         if (_rightVelocityRenderLimit < 0) _rightVelocityRenderLimit = 0.0f;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        bool collided = collision.gameObject.layer == LayerMask.NameToLayer("Rune");
+        if (collided)
+        {
+            //if (showExplosions) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+            //ObjectPoolScript.ReturnInstance(gameObject);
+            Health--;
+            if (Health <= 0 && !IsDead)
+            {
+                Health = 0;
+                IsDead = true;
+                StartCoroutine(PlayerDeath(delay: 2.0f));
+            }
+            return;
+        }
+    }
+
+    private IEnumerator PlayerDeath(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (_explosionEffect != null)
+            Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+        StartCoroutine(StopTime(delay: 2.0f));
+        Destroy(gameObject);
+    }
+    private IEnumerator StopTime(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Time.timeScale = 0.0f;
+    }
+
 }

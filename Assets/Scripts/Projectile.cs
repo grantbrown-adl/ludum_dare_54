@@ -50,15 +50,13 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        bool collided = collision.gameObject.layer == LayerMask.NameToLayer("BlackHole") || collision.gameObject.layer == LayerMask.NameToLayer("Rune");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) return;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("BlackHole"))
+        if (collided)
         {
             if(showExplosions) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
             ObjectPoolScript.ReturnInstance(gameObject);
             return;
         }
-
-        Debug.Log($"Collided Object: {collision.gameObject}");
-        Debug.Log($"Collided Layer: {collision.gameObject.layer}");
     }
 }
