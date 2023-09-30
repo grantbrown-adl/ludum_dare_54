@@ -182,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
   _trailRenderer: {fileID: 0}
+  _showTrail: 0
 --- !u!1 &7726394051364518547
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +281,7 @@ GameObject:
   - component: {fileID: 5379783452461531323}
   - component: {fileID: 4228393942205059280}
   - component: {fileID: 2525205640510464676}
+  - component: {fileID: 1714281621357900492}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -346,6 +348,7 @@ MonoBehaviour:
   _projectilePool: {fileID: 0}
   _rigidbody2D: {fileID: 0}
   _projectilePosition: {fileID: 8586613725490491866}
+  _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
   _accelerationSpeed: 0
   _rotationSpeed: 0
   _slideFactor: 0
@@ -353,6 +356,7 @@ MonoBehaviour:
   _forwardDragAmount: 0
   _forwardDragTime: 0
   _rightVelocityRenderLimit: 2
+  _health: 0
   _accelerationInput: 0
   _rotationInput: 0
   _rotationAngle: 0
@@ -361,6 +365,7 @@ MonoBehaviour:
   _rightVelocity: {x: 0, y: 0}
   _relativeForwardVelocity: 0
   _reverseSpeedFactor: 0
+  _isDead: 0
 --- !u!114 &4228393942205059280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +381,7 @@ MonoBehaviour:
   _playerController: {fileID: 0}
   _canFire: 0
   _fireRate: 0
+  _autoFire: 0
 --- !u!60 &2525205640510464676
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -424,3 +430,16 @@ PolygonCollider2D:
       - {x: 0.25, y: -0.25}
       - {x: -0.25, y: -0.25}
   m_UseDelaunayMesh: 0
+--- !u!114 &1714281621357900492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544655038409588181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45cb605eba05fe4387bb404d1998d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 0}

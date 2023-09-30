@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3306816525984800993}
   - component: {fileID: 8511019669985875441}
   - component: {fileID: 7302164696804557945}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b4a7d2e338ab419e4738818df8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showExplosions: 0
   _projectilePool: {fileID: 0}
   _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
   _moveSpeed: 5
