@@ -6,8 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Object Pools")]
+    [SerializeField] private ObjectPoolScript _projectilePool;
+    public ObjectPoolScript ProjectilePool { get => _projectilePool; set => _projectilePool = value; }
+    
+
     [Header("Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
+    [SerializeField] Transform _projectilePosition;
 
     [Header("Settings")]
     [SerializeField] private float _accelerationSpeed;
@@ -66,16 +72,16 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRotation()
     {
-        //minimumTurnSpeed = _rigidbody2D.velocity.magnitude / minimumTurnSpeedFactor;
-        //minimumTurnSpeed = Mathf.Clamp(minimumTurnSpeed, 0, 1);
-
-
         _rotationAngle -= _rotationInput * _rotationSpeed;
         _rigidbody2D.MoveRotation(_rotationAngle);
     }
 
-    public void HandleInput(Vector2 inputVector)
+    public void HandleInput(Vector2 inputVector, bool fire)
     {
+        if (fire) {
+            FireProjectile();
+            Debug.Log("Fire");
+        }
         _rotationInput = inputVector.x;
         _accelerationInput = inputVector.y;
     }
@@ -99,6 +105,14 @@ public class PlayerController : MonoBehaviour
         braking = _accelerationInput < 0 && _relativeForwardVelocity > 0;
 
         return braking || Mathf.Abs(rightVelocity) > _rightVelocityRenderLimit;
+    }
+
+    private void FireProjectile()
+    {
+        GameObject projectile = ProjectilePool.GetInstance();
+        projectile.transform.position = _projectilePosition.position;
+        projectile.transform.rotation = _projectilePosition.rotation;
+        projectile.SetActive(true);
     }
 
     void InitialiseVariables()
