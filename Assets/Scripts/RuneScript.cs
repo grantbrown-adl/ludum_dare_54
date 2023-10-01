@@ -21,6 +21,7 @@ public class RuneScript : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private bool _showExplosions;
     [SerializeField] private GameObject _explosionEffect;
+    [SerializeField] private GameObject _healthRune;
 
     public float Scale { get => _scale; set => _scale = value; }
     public float MinScale { get => _minScale; set => _minScale = value; }
@@ -63,6 +64,8 @@ public class RuneScript : MonoBehaviour
     {
         if ((Scale * 0.5f) <= MinScale) return;
 
+        bool spawnHealth = GameHandler.Instance.ShowHealth;
+
         int pieces = (int)(Scale / MinScale);
 
         for (int i = 0; i < pieces; i++)
@@ -70,9 +73,28 @@ public class RuneScript : MonoBehaviour
             Vector2 currentPosition = transform.position;
             currentPosition += Random.insideUnitCircle * 0.5f;
 
-            RuneScript split = Instantiate(this, currentPosition, transform.rotation);
-            split.Scale = Scale * MinScale;
-            split.SetTrajectory(Random.insideUnitCircle.normalized * _runeSpeed);
+            if(spawnHealth)
+            {
+                int random = Random.Range(0, 100);
+                if(random <= GameHandler.Instance.HealthSpawnRate)
+                {
+                    GameObject healthSplit = Instantiate(_healthRune, currentPosition, transform.rotation);
+                    healthSplit.GetComponent<HealthRune>().SetTrajectory(Random.insideUnitCircle.normalized * _runeSpeed);
+
+                }
+                else
+                {
+                    RuneScript split = Instantiate(this, currentPosition, transform.rotation);
+                    split.Scale = Scale * MinScale;
+                    split.SetTrajectory(Random.insideUnitCircle.normalized * _runeSpeed);
+                }
+            } else
+            {
+                RuneScript split = Instantiate(this, currentPosition, transform.rotation);
+                split.Scale = Scale * MinScale;
+                split.SetTrajectory(Random.insideUnitCircle.normalized * _runeSpeed);
+            }
+
         }
     }
 
@@ -84,6 +106,8 @@ public class RuneScript : MonoBehaviour
             Health--;
             if(Health <= 0)
             {
+                if (collision.gameObject.layer == LayerMask.NameToLayer("Projectile")) ScoreManager.Instance.Score++;
+
                 if (ShowExplosions && _explosionEffect != null) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
                 SplitRune();
                 Destroy(gameObject);

@@ -19,7 +19,6 @@ public class PlayerManager : MonoBehaviour
         else
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         if(_playerHealth <= 0) PlayerHealth = 3; 

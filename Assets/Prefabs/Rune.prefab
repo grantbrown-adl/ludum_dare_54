@@ -179,3 +179,7 @@ MonoBehaviour:
   _maxScale: 0
   _runeSpeed: 0
   _lifeTime: 0
+  _health: 0
+  _showExplosions: 0
+  _explosionEffect: {fileID: 0}
+  _healthRune: {fileID: 6767727352598619197, guid: 0ca03ae3ff922704cb1e0c537059502d, type: 3}
