@@ -7,9 +7,6 @@ public class TrailHandler : MonoBehaviour
 {
     [SerializeField] PlayerController _playerController;
     [SerializeField] TrailRenderer _trailRenderer;
-    [SerializeField] private bool _showTrail = false;
-
-    public bool ShowTrail { get => _showTrail; set => _showTrail = value; }
 
     private void Awake()
     {
@@ -21,8 +18,8 @@ public class TrailHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_playerController.RenderTrail(out float rightVelocity, out bool braking) && ShowTrail)
-            _trailRenderer.emitting = true;
+        if (_playerController.RenderTrail(out float rightVelocity, out bool braking))
+            _trailRenderer.emitting = GameHandler.Instance.RenderTrails;
         else _trailRenderer.emitting = false;
     }
 }

@@ -22,11 +22,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     void ReceiveInput()
     {
+        if(_playerController.IsDead || TimeManager.Instance.IsPaused) return;
+
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         Vector2 moveInput = new Vector2(x, y);
 
-        bool fire = _canFire && Input.GetButtonDown("Fire1");
+        bool fire = _canFire && (Input.GetButton("Fire1") || GameHandler.Instance.AutoFire);
         
         _playerController.HandleInput(moveInput, fire);
 

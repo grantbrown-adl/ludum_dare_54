@@ -9,14 +9,21 @@ public class PlanetAttractor : MonoBehaviour
     [SerializeField] private float _radius;   
     [SerializeField] private HashSet<Rigidbody2D> _rigidbodies = new();
     [SerializeField] private int _numRigidbodies;
+    [SerializeField] private GameObject _squareSprite;
+    [SerializeField] private GameObject _cube;
 
     private void Awake()
     {
         if (_gravitationalForce <= 0) _gravitationalForce = 3.0f;
         if (_radius <= 0) _radius = 5.0f;
+        _squareSprite.SetActive(true);
+        _cube.SetActive(false);
     }
     void FixedUpdate()
     {
+        _squareSprite.SetActive(!GameHandler.Instance.ShowCube);
+        _cube.SetActive(GameHandler.Instance.ShowCube);
+
         _numRigidbodies = _rigidbodies.Count;
         _rigidbodies.Clear();
         foreach (Collider2D objectCollision in Physics2D.OverlapCircleAll(transform.position, _radius))

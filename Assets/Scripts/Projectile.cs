@@ -6,9 +6,6 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Juice Bools")]
-    [SerializeField] private bool showExplosions = false;
-
     [Header("Object Pools")]
     [SerializeField] private ObjectPoolScript _projectilePool;
 
@@ -18,7 +15,6 @@ public class Projectile : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _damage;
-    [SerializeField] private PoolAfterTime _poolAfter;
     [SerializeField] private Vector2 _direction;
     private readonly float gravity = 0.0f;   
 
@@ -50,15 +46,13 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        bool collided = collision.gameObject.layer == LayerMask.NameToLayer("BlackHole") || collision.gameObject.layer == LayerMask.NameToLayer("Rune");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) return;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("BlackHole"))
+        if (collided)
         {
-            if(showExplosions) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+            if(_explosionEffect != null && GameHandler.Instance.ShowProjectileExplosions) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
             ObjectPoolScript.ReturnInstance(gameObject);
             return;
         }
-
-        Debug.Log($"Collided Object: {collision.gameObject}");
-        Debug.Log($"Collided Layer: {collision.gameObject.layer}");
     }
 }
