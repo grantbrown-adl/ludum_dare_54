@@ -18,6 +18,9 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private bool _cheatsEnabled = false;
     [SerializeField] private int _cheatEnabler;
     [SerializeField] private TextMeshProUGUI _timeScaleDisplay;
+    [SerializeField] private float _startTime;
+    [SerializeField] private float _elapsedTime;
+    [SerializeField] private int _minutesElapsed;
 
     public bool IsPaused { get => isPaused; set => isPaused = value; }
     public static TimeManager Instance { get => _instance; set => _instance = value; }
@@ -25,6 +28,9 @@ public class TimeManager : MonoBehaviour
     public bool CheatsEnabled { get => _cheatsEnabled; set => _cheatsEnabled = value; }
     public bool IsDialogShowing { get => _isDialogShowing; set => _isDialogShowing = value; }
     public bool IsGameWon { get => _isGameWon; set => _isGameWon = value; }
+    public float StartTime { get => _startTime; set => _startTime = value; }
+    public float ElapsedTime { get => _elapsedTime; set => _elapsedTime = value; }
+    public int MinutesElapsed { get => _minutesElapsed; set => _minutesElapsed = value; }
 
     private void Awake()
     {
@@ -39,33 +45,44 @@ public class TimeManager : MonoBehaviour
         _cheatEnabler = 0;
         _cheatsEnabled = false;
     }
+
+    private void Start()
+    {
+        _minutesElapsed = 0;
+        _startTime = 0.0f;
+        _startTime = Time.time;
+    }
+
     private void Update()
     {
-        if(_timeScaleDisplay != null) _timeScaleDisplay.text = $"{_currentTimeScale:n2}x";
+        _elapsedTime = Time.time - _startTime;
+
+        _minutesElapsed = Mathf.FloorToInt(_elapsedTime / 60.0f);
+
+        if (_isGameWon && !_isDialogShowing)
+        {
+            _gameWonPanel.SetActive(true);
+            Time.timeScale = 0;
+            return;
+        }
+
+        
+        if (_timeScaleDisplay != null) _timeScaleDisplay.text = $"{_currentTimeScale:n2}x";
         if (isPaused)
         {
-            Debug.Log("Paused");
             if (!_isGameOver && !_isDialogShowing && !_isGameWon)
             { 
                 _pausePanel.SetActive(true);
-                Debug.Log("1) !_isGameOver && !_isDialogShowing && !_isGameWon");
             }
             else if (_isGameOver && !_isDialogShowing && !_isGameWon)
             {
-                Debug.Log("2) _isGameOver && !_isDialogShowing && !_isGameWon");
                 _gameOverPanel.SetActive(true);
 
-            }
-            else if (_isGameWon && !_isDialogShowing)
-            {
-                Debug.Log("3) _isGameWon && !_isDialogShowing");
-                _gameWonPanel.SetActive(true);
             }
             Time.timeScale = 0;
         }
         else
         {
-            Debug.Log("Else");
             _gameOverPanel.SetActive(false);
             _pausePanel.SetActive(false);
             _gameWonPanel.SetActive(false);

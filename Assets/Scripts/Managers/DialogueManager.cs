@@ -87,7 +87,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextString()
     {
-        if(_dialogueStrings.Count == 1) _continueText.text = "exit";
+        if(_dialogueStrings.Count == 1) _continueText.text = "close";
 
         if (_dialogueStrings.Count == 0)
         {            

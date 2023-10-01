@@ -74,12 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b4a7d2e338ab419e4738818df8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showExplosions: 0
   _projectilePool: {fileID: 0}
   _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
   _moveSpeed: 5
   _damage: 0
-  _poolAfter: {fileID: 0}
   _direction: {x: 0, y: 0}
 --- !u!61 &7302164696804557945
 BoxCollider2D:

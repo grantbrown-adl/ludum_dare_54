@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
         _rigidbody.velocity = initialVelocity;
         _rigidbody.gravityScale = gravity;
 
-        StartCoroutine(ObjectPoolScript.DelayedReturnInstance(gameObject, 5.0f));
+        StartCoroutine(ObjectPoolScript.DelayedReturnInstance(gameObject, 12.0f));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

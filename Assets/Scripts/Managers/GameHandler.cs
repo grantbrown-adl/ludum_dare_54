@@ -44,6 +44,7 @@ public class GameHandler : MonoBehaviour
         }
 
         _autoFire = false;
+        _showScore = false;
 
         ClearState();
     }
@@ -62,8 +63,7 @@ public class GameHandler : MonoBehaviour
         _showProjectileExplosions = false;
         _showHealth = false;
         _allowPlayerGravity = false;
-        _healthSpawnRate = 15;
-        _showScore = false;
+        _healthSpawnRate = 15;        
         _absorbtions = 0;
     }
 
@@ -82,7 +82,7 @@ public class GameHandler : MonoBehaviour
             _showCube = true;
         }
 
-        if(Absorbtions == 20)
+        if(Absorbtions == 20 || TimeManager.Instance.MinutesElapsed > 5)
         {
             DialogueManager.Instance.StartDialogue(dialogueIndex: 11);
             _allowPlayerGravity = true;            

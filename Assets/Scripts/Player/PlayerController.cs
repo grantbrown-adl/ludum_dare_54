@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour
         if(_isAbsorbable)
         {
             DialogueManager.Instance.StartDialogue(dialogueIndex: 12);
-            TimeManager.Instance.IsPaused = true;
             TimeManager.Instance.IsGameWon = true;
         }
     }

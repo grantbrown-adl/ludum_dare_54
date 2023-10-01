@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8692890940034083124}
   - component: {fileID: 5649231406032119941}
   - component: {fileID: 1636226000827215505}
+  - component: {fileID: 9003685161023466186}
   m_Layer: 7
   m_Name: Rune
   m_TagString: Untagged
@@ -180,6 +181,18 @@ MonoBehaviour:
   _runeSpeed: 0
   _lifeTime: 0
   _health: 0
-  _showExplosions: 0
   _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
   _healthRune: {fileID: 6767727352598619197, guid: 0ca03ae3ff922704cb1e0c537059502d, type: 3}
+--- !u!114 &9003685161023466186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623050544902672774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45cb605eba05fe4387bb404d1998d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 0}

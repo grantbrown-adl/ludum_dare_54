@@ -31,9 +31,9 @@ public class RuneScript : MonoBehaviour
     {
         if(MinScale <= 0.0f) MinScale = 0.5f;
         if (MaxScale <= 1.5f) MaxScale = 1.5f;
-        if (Health <= 0) Health = 1; 
-        if (_runeSpeed <= 0.0f) _runeSpeed = 10.0f;
-        if (_lifeTime <= 0.0f) _lifeTime = 30.0f;
+        Health = Random.Range(1, 2); 
+        if (_runeSpeed <= 0.0f) _runeSpeed = 12.0f;
+        _lifeTime = 60.0f;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }

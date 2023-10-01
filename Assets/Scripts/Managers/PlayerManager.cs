@@ -26,7 +26,7 @@ public class PlayerManager : MonoBehaviour
             _instance = this;
         }
 
-        if(_playerHealth <= 0) PlayerHealth = 3; 
+        PlayerHealth = 5; 
         _playerDead = false;
     }
 

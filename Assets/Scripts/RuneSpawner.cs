@@ -34,6 +34,9 @@ public class RuneSpawner : MonoBehaviour
 
     private void SpawnRune()
     {
+        _spawnAmount += (TimeManager.Instance.MinutesElapsed / 2);
+        _spawnSpeed += TimeManager.Instance.MinutesElapsed;
+
         for (int i = 0; i < _spawnAmount; i++)
         {
             Vector3 randomDirection = Random.insideUnitCircle.normalized * _spawnDistance;
