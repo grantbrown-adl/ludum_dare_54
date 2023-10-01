@@ -9,13 +9,14 @@ public class PlayerController : MonoBehaviour
     [Header("Object Pools")]
     [SerializeField] private ObjectPoolScript _projectilePool;
     public ObjectPoolScript ProjectilePool { get => _projectilePool; set => _projectilePool = value; }
-    public int Health { get => _health; set => _health = value; }
     public bool IsDead { get => _isDead; set => _isDead = value; }
 
     [Header("Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] Transform _projectilePosition;
     [SerializeField] GameObject _explosionEffect;
+    [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] PolygonCollider2D _polyCollider2d;
 
     [Header("Settings")]
     [SerializeField] private float _accelerationSpeed;
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _forwardDragAmount;
     [SerializeField] private float _forwardDragTime;
     [SerializeField] private float _rightVelocityRenderLimit;
-    [SerializeField] private int _health;
 
     [Header("View Variables")]
     [SerializeField] private float _accelerationInput;
@@ -43,8 +43,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        IsDead = false;
-        if (Health <= 0) Health = 1;
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer.enabled = true;
+        _polyCollider2d = GetComponent<PolygonCollider2D>();
+        _polyCollider2d.enabled = true;
+        _isDead = false;
         InitialiseVariables();
     }
 
@@ -142,12 +145,11 @@ public class PlayerController : MonoBehaviour
         bool collided = collision.gameObject.layer == LayerMask.NameToLayer("Rune");
         if (collided)
         {
-            //if (showExplosions) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
-            //ObjectPoolScript.ReturnInstance(gameObject);
-            Health--;
-            if (Health <= 0 && !IsDead)
+            if(GameHandler.Instance.ShowHealth) PlayerManager.Instance.PlayerHealth--;
+
+            if (PlayerManager.Instance.PlayerHealth <= 0 && !IsDead)
             {
-                Health = 0;
+                PlayerManager.Instance.PlayerHealth = 0;
                 IsDead = true;
                 StartCoroutine(PlayerDeath(delay: 2.0f));
             }
@@ -160,13 +162,12 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (_explosionEffect != null)
             Instantiate(_explosionEffect, transform.position, Quaternion.identity);
-        StartCoroutine(StopTime(delay: 2.0f));
-        Destroy(gameObject);
-    }
-    private IEnumerator StopTime(float delay)
-    {
+        _spriteRenderer.enabled = false;
+        _polyCollider2d.enabled = false;
         yield return new WaitForSeconds(delay);
-        Time.timeScale = 0.0f;
+        TimeManager.Instance.IsGameOver = true;
+        TimeManager.Instance.IsPaused = true;
+        GameHandler.Instance.RenderTrails = false;
+        gameObject.SetActive(false);
     }
-
 }

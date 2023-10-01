@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3732474389518425413
+--- !u!1 &6883907876616632165
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4258291841292282484}
-  - component: {fileID: 4355229051575090003}
+  - component: {fileID: 5328577331733521739}
+  - component: {fileID: 1102265967308176931}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: RuneSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4258291841292282484
+--- !u!4 &5328577331733521739
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3732474389518425413}
+  m_GameObject: {fileID: 6883907876616632165}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -0.125, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4355229051575090003
+--- !u!114 &1102265967308176931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3732474389518425413}
+  m_GameObject: {fileID: 6883907876616632165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33e34369d87666b4f88a23aa41c74346, type: 3}
+  m_Script: {fileID: 11500000, guid: 06f978268ea9e854e86f6cd327c21833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderTrails: 0
-  _showRunes: 0
-  _showCube: 0
-  _autoFire: 0
+  _rune: {fileID: 1636226000827215505, guid: 0e6b645a5a342004ea2b0b553808c1e7, type: 3}
+  _spawnSpeed: 3
+  _spawnAmount: 1
+  _spawnDistance: 12
+  _trajectoryVariance: 15

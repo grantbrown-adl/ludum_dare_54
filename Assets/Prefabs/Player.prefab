@@ -182,7 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
   _trailRenderer: {fileID: 0}
-  _showTrail: 0
 --- !u!1 &7726394051364518547
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,10 +344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1249b14639d03dc409aa6e45e974f7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePool: {fileID: 0}
+  _projectilePool: {fileID: 9220930091868563895, guid: 827688088f96e644fb6891a023d65595, type: 3}
   _rigidbody2D: {fileID: 0}
   _projectilePosition: {fileID: 8586613725490491866}
   _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
+  _spriteRenderer: {fileID: 0}
   _accelerationSpeed: 0
   _rotationSpeed: 0
   _slideFactor: 0
@@ -381,7 +381,6 @@ MonoBehaviour:
   _playerController: {fileID: 0}
   _canFire: 0
   _fireRate: 0
-  _autoFire: 0
 --- !u!60 &2525205640510464676
 PolygonCollider2D:
   m_ObjectHideFlags: 0

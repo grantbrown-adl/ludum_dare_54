@@ -50,6 +50,8 @@ MonoBehaviour:
   _gravitationalForce: 3
   _radius: 10
   _numRigidbodies: 0
+  _squareSprite: {fileID: 5558039336191389259}
+  _cube: {fileID: 7350721979834006384}
 --- !u!58 &9159269086463914516
 CircleCollider2D:
   m_ObjectHideFlags: 0

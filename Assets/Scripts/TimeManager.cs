@@ -9,6 +9,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private bool isPaused;
     private static TimeManager _instance;
     [SerializeField] GameObject _pausePanel;
+    [SerializeField] GameObject _gameOverPanel;
     [SerializeField] private bool _isGameOver;
     [SerializeField] private float _currentTimeScale;
     [SerializeField] private bool _cheatsEnabled = false;
@@ -38,10 +39,12 @@ public class TimeManager : MonoBehaviour
         if (isPaused)
         {
             if (!_isGameOver) _pausePanel.SetActive(true);
+            else if(_isGameOver) _gameOverPanel.SetActive(true);
             Time.timeScale = 0;
         }
         else
         {
+            _gameOverPanel.SetActive(false);
             _pausePanel.SetActive(false);
             Time.timeScale = _currentTimeScale;
         }
@@ -74,4 +77,11 @@ public class TimeManager : MonoBehaviour
         if (_currentTimeScale < 0.25f) _currentTimeScale = 0.25f;
     }
 
+    public IEnumerator StopTimeAfterDelay(float delay)
+    {
+        Debug.Log($"Starting StopTimeAfterDelay in {delay}");
+        yield return new WaitForSecondsRealtime(delay);
+        Debug.Log("It happened");
+        IsPaused = true;
+    }
 }
