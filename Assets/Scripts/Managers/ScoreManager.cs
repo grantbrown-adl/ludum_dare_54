@@ -31,9 +31,17 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        if (Score > 10)
+        if (Score == 5)
+        {
+            GameHandler.Instance.ShowProjectileExplosions = true;
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 10);
+        }
+
+        if (Score == 10)
         {
             GameHandler.Instance.ShowScore = true;
+            GameHandler.Instance.RenderTrails = true;
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 7);
         }
 
         if(_currentScore > _highScore)

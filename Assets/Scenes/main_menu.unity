@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 161803004}
   - component: {fileID: 161803003}
-  - component: {fileID: 161803006}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -151,7 +150,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 594053dd5244b3140a38c9723ace7847, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4ffca1f9c977e8249935225116d82caf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -252,18 +251,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &161803006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161803002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8ce004257222284ea611f3c13bc856d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &778655138820272235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -386,6 +373,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1723806749135949389, guid: bca7c805422d7564593758b364dc5db3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4183770311867269736, guid: bca7c805422d7564593758b364dc5db3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 640

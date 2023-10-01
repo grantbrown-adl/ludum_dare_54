@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _relativeForwardVelocity;
     [SerializeField] private float _reverseSpeedFactor;
     [SerializeField] private bool _isDead;
+    [SerializeField] private bool _isAbsorbable;
 
     private float epsilon = 0.01f;
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
         _polyCollider2d = GetComponent<PolygonCollider2D>();
         _polyCollider2d.enabled = true;
         _isDead = false;
+        _isAbsorbable = false;
         InitialiseVariables();
     }
 
@@ -143,9 +145,12 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         bool collided = collision.gameObject.layer == LayerMask.NameToLayer("Rune");
+        _isAbsorbable = collision.gameObject.layer == LayerMask.NameToLayer("BlackHole") && GameHandler.Instance.AllowPlayerGravity;
         if (collided)
         {
-            if(GameHandler.Instance.ShowHealth) PlayerManager.Instance.PlayerHealth--;
+            PlayerManager.Instance.IncrementCollisions();
+
+            if (GameHandler.Instance.ShowHealth) PlayerManager.Instance.PlayerHealth--;
 
             if (PlayerManager.Instance.PlayerHealth <= 0 && !IsDead)
             {
@@ -154,6 +159,13 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(PlayerDeath(delay: 2.0f));
             }
             return;
+        }
+
+        if(_isAbsorbable)
+        {
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 12);
+            TimeManager.Instance.IsPaused = true;
+            TimeManager.Instance.IsGameWon = true;
         }
     }
 
@@ -164,10 +176,10 @@ public class PlayerController : MonoBehaviour
             Instantiate(_explosionEffect, transform.position, Quaternion.identity);
         _spriteRenderer.enabled = false;
         _polyCollider2d.enabled = false;
+        GameHandler.Instance.RenderTrails = false;
         yield return new WaitForSeconds(delay);
         TimeManager.Instance.IsGameOver = true;
-        TimeManager.Instance.IsPaused = true;
-        GameHandler.Instance.RenderTrails = false;
+        TimeManager.Instance.IsPaused = true;        
         gameObject.SetActive(false);
     }
 }

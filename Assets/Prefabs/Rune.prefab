@@ -181,5 +181,5 @@ MonoBehaviour:
   _lifeTime: 0
   _health: 0
   _showExplosions: 0
-  _explosionEffect: {fileID: 0}
+  _explosionEffect: {fileID: 3790075508004250645, guid: c8a8c1654dba13842bb68f6f6f914d4a, type: 3}
   _healthRune: {fileID: 6767727352598619197, guid: 0ca03ae3ff922704cb1e0c537059502d, type: 3}

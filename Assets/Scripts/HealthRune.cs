@@ -12,11 +12,9 @@ public class HealthRune : MonoBehaviour
     [SerializeField] private float _runeSpeed;
     [SerializeField] private float _lifeTime;
     [SerializeField] private int _health;
-    [SerializeField] private bool _showExplosions;
     [SerializeField] private GameObject _explosionEffect;
 
     public int Health { get => _health; set => _health = value; }
-    public bool ShowExplosions { get => _showExplosions; set => _showExplosions = value; }
 
     private void Awake()
     {
@@ -46,7 +44,7 @@ public class HealthRune : MonoBehaviour
         if (collided)
         {
             if (GameHandler.Instance.ShowHealth) PlayerManager.Instance.PlayerHealth++;
-            if (ShowExplosions && _explosionEffect != null) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+            if (GameHandler.Instance.ShowRuneExplosions && _explosionEffect != null) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

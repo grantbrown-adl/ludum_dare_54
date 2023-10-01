@@ -20,6 +20,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] private bool _allowPlayerGravity;
     [SerializeField] private bool _showScore;
     [SerializeField] private int _healthSpawnRate;
+    [SerializeField] private int _absorbtions;
 
     public bool ShowCube { get => _showCube; set => _showCube = value; }
     public bool ShowRunes { get => _showRunes; set => _showRunes = value; }
@@ -31,6 +32,7 @@ public class GameHandler : MonoBehaviour
     public bool AllowPlayerGravity { get => _allowPlayerGravity; set => _allowPlayerGravity = value; }
     public int HealthSpawnRate { get => _healthSpawnRate; set => _healthSpawnRate = value; }
     public bool ShowScore { get => _showScore; set => _showScore = value; }
+    public int Absorbtions { get => _absorbtions; set => _absorbtions = value; }
 
     private void Awake()
     {
@@ -41,20 +43,49 @@ public class GameHandler : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        _autoFire = false;
+
         ClearState();
     }
-
-    private void ClearState()
+    private void Update()
     {
+        if(_allowPlayerGravity) Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("BlackHole"), false);
+    }
+
+    public void ClearState()
+    {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("BlackHole"));
         _renderTrails = false;
         _showRunes = false;
         _showCube = false;
-        _autoFire = false;
         _showRuneExplosions = false;
         _showProjectileExplosions = false;
         _showHealth = false;
         _allowPlayerGravity = false;
         _healthSpawnRate = 15;
         _showScore = false;
+        _absorbtions = 0;
+    }
+
+    public void IncrementAbsorbtions()
+    {
+        _absorbtions++;
+
+        if(Absorbtions == 10)
+        {
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 5);
+            _showRunes = true;
+        }
+        else if (Absorbtions == 11)
+        {
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 6);
+            _showCube = true;
+        }
+
+        if(Absorbtions == 20)
+        {
+            DialogueManager.Instance.StartDialogue(dialogueIndex: 11);
+            _allowPlayerGravity = true;            
+        }
     }
 }

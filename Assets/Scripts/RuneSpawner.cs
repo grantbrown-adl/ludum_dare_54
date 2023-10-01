@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RuneSpawner : MonoBehaviour
 {
+    private static RuneSpawner _instance;
+
+    public static RuneSpawner Instance { get => _instance; private set => _instance = value; }
+
     [Header("Components")]
     [SerializeField] RuneScript _rune;
 
@@ -13,8 +17,18 @@ public class RuneSpawner : MonoBehaviour
     [SerializeField] private float _spawnDistance = 12.0f;
     [SerializeField] private float _trajectoryVariance = 15.0f;
 
-    private void Start()
+    private void Awake()
     {
+        if (_instance != null && _instance != this) Destroy(gameObject);
+        else
+        {
+            _instance = this;
+        }
+    }
+
+    public void StartSpawner()
+    {
+        DialogueManager.Instance.StartDialogue(dialogueIndex: 1);
         InvokeRepeating(nameof(SpawnRune), _spawnSpeed, _spawnSpeed);
     }
 

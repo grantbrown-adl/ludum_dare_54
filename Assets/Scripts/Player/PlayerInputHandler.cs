@@ -12,7 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _playerController = GetComponent<PlayerController>();
         _canFire = true;
-        if (_fireRate <= 0) _fireRate = 0.5f;
+        if (_fireRate <= 0) _fireRate = 0.25f;
     }
 
     void Update()
@@ -22,6 +22,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     void ReceiveInput()
     {
+        if (!PlayerManager.Instance.InputAllowed) return;
         if(_playerController.IsDead || TimeManager.Instance.IsPaused) return;
 
         float x = Input.GetAxis("Horizontal");
